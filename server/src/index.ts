@@ -11,46 +11,34 @@ dotenv.config();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+let dbURI: string = '';
+let PORT: number;
+let HOST: string;
+
 if (process.env.NODE_ENV === 'production') {
-    const dbURI: string = process.env.PRODUCTION_DB_URI!;
-
-    connect(dbURI, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        useFindAndModify: false
-    })
-        .then(() => {
-            const PORT: number = parseInt(process.env.PRODUCTION_PORT!);
-            const HOST: string = process.env.PRODUCTION_HOST!;
-
-            app.listen(PORT, HOST, () => {
-                console.log(`App hosted on: ${HOST}:${PORT}`);
-            });
-        })
-        .catch(err => {
-            console.log(`Mongodb Atlas Connection Error:  ${err.message}`);
-        });
-} else if (process.env.NODE_ENV === 'development') {
-    const dbURI: string = process.env.DEVELOPMENT_DB_URI!;
-
-    connect(dbURI, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        useFindAndModify: false
-    })
-        .then(() => {
-            const PORT: number = parseInt(process.env.DEVELOPMENT_PORT!);
-            const HOST: string = process.env.DEVELOPMENT_HOST!;
-
-            app.listen(PORT, HOST, () => {
-                console.log(`App hosted on: ${HOST}:${PORT}`);
-            });
-        })
-        .catch(err => {
-            console.log(`Mongodb Atlas Connection Error:  ${err.message}`);
-        });
-} else {
-    console.log('ENV: ', process.env.NODE_ENV);
+    dbURI = process.env.PRODUCTION_DB_URI!;
+    PORT = parseInt(process.env.PRODUCTION_PORT!);
+    HOST = process.env.PRODUCTION_HOST!;
 }
+
+if (process.env.NODE_ENV === 'development') {
+    dbURI = process.env.PRODUCTION_DB_URI!;
+    PORT = parseInt(process.env.PRODUCTION_PORT!);
+    HOST = process.env.PRODUCTION_HOST!;
+}
+
+connect(dbURI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false
+})
+    .then(() => {
+        app.listen(PORT, HOST, () => {
+            console.log(`App hosted on: ${HOST}:${PORT}`);
+        });
+    })
+    .catch(err => {
+        console.log(`Mongodb Atlas Connection Error:  ${err.message}`);
+    });
 
 // Routes Middleware
