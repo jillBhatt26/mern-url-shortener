@@ -1,6 +1,8 @@
 // imports
 import ShortUrls from '../models/ShortUrls';
 
+import { nanoid } from 'nanoid';
+
 // default types
 import { Response, Request } from 'express';
 
@@ -38,10 +40,8 @@ const FetchShortUrl = async (req: NExpress.IRequest, res: Response) => {
 const CreateShortUrl = async (req: Request, res: Response) => {
     const { long }: ICreateReqBody = req.body;
 
-    // TODO: Generate slug
-
     try {
-        const newShortUrl = await ShortUrls.create({ long });
+        const newShortUrl = await ShortUrls.create({ long, slug: nanoid(6) });
 
         return res.json({ url: newShortUrl });
     } catch (error) {
@@ -54,7 +54,15 @@ const UpdateSlug = async (req: NExpress.IRequest, res: Response) => {
 
     const { slug }: IUpdateReqBody = req.body;
 
+    // check if the custom slug is available
+
     try {
+        const urls = await ShortUrls.find({ slug });
+
+        if (urls.length) {
+            return res.json({ error: 'Slug is already taken' });
+        }
+
         const newShortUrl = await ShortUrls.findByIdAndUpdate(
             id,
             { slug },

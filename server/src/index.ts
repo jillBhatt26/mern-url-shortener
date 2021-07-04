@@ -1,7 +1,7 @@
 // module imports
 import express, { Application } from 'express';
 import http from 'http';
-import config from './config';
+import config from './config/Environment';
 
 // middleware imports
 import logger from './api/v1/middleware/Logger';
@@ -11,6 +11,10 @@ import RequestLogs from './api/v1/middleware/RequestLogs';
 // routes imports
 import shortUrlRoutes from './api/v1/routes/ShortUrlsRoutes';
 
+// swagger imports
+import swaggerSpecs from './config/Swagger';
+import swaggerUI from 'swagger-ui-express';
+
 // MongoDB Database
 import Database from './Database';
 import ErrorHandler from './api/v1/middleware/Error';
@@ -19,6 +23,9 @@ import ErrorHandler from './api/v1/middleware/Error';
 const app: Application = express();
 
 const NAMESPACE: string = 'SERVER';
+
+// swagger middleware
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpecs));
 
 // Logger middleware
 app.use(RequestLogs);

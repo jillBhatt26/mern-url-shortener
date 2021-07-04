@@ -1,6 +1,6 @@
 // imports
 import mongoose from 'mongoose';
-import config from '../config';
+import config from '../config/Environment';
 
 class Database {
     constructor(private DB_URI: string = config.DB_URI) {}
