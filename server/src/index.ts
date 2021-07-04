@@ -8,6 +8,9 @@ import logger from './api/v1/middleware/Logger';
 import SetHeaders from './api/v1/middleware/Headers';
 import RequestLogs from './api/v1/middleware/RequestLogs';
 
+// routes imports
+import shortUrlRoutes from './api/v1/routes/ShortUrlsRoutes';
+
 // MongoDB Database
 import Database from './Database';
 import ErrorHandler from './api/v1/middleware/Error';
@@ -27,11 +30,6 @@ app.use(express.urlencoded({ extended: true }));
 // CORS middleware
 app.use(SetHeaders);
 
-// Routes middleware
-
-// Error Handler middleware
-app.use(ErrorHandler);
-
 // Database connection
 Promise.resolve(new Database().connection())
     .then(isConnected => {
@@ -48,3 +46,9 @@ Promise.resolve(new Database().connection())
     .catch(err => {
         console.log('Connection Error: ', err);
     });
+
+// Routes middleware
+app.use('/shortUrls', shortUrlRoutes);
+
+// Error Handler middleware
+app.use(ErrorHandler);
