@@ -3,6 +3,8 @@ import ShortUrls from '../models/ShortUrls';
 
 import { nanoid } from 'nanoid';
 
+import config from '../../../config/Environment';
+
 // default types
 import { Response, Request } from 'express';
 
@@ -13,13 +15,28 @@ import NExpress from '../../../global/namespaces/NExpress';
 import ICreateReqBody from '../Interfaces/controllers/ICreateReqBody';
 import IUrlParams from '../Interfaces/controllers/IUrlParams';
 import IUpdateReqBody from '../Interfaces/controllers/IUpdateReqBody';
+import IShortUrl from '../Interfaces/models/IShortUrl';
 
 // controllers definitions
+const Home = async (req: Request, res: Response) => {
+    return res.json({ msg: 'Hello to my TypeScript Setup!!' });
+};
+
 const FetchShortUrlsAll = async (req: Request, res: Response) => {
     try {
-        const shortUrls = await ShortUrls.find({});
+        const shortUrls: Array<IShortUrl> = await ShortUrls.find({});
 
-        return res.json({ urls: shortUrls });
+        const data = shortUrls.map(url => {
+            const info = {
+                id: url._id,
+                long: url.long,
+                short: `${config.HOST}/${url.slug}`
+            };
+
+            return info;
+        });
+
+        return res.json({ urls: data });
     } catch (error) {
         return res.json({ error: error.message });
     }
@@ -29,9 +46,17 @@ const FetchShortUrl = async (req: NExpress.IRequest, res: Response) => {
     const { id }: IUrlParams = req.params;
 
     try {
-        const shortUrl = await ShortUrls.findById(id);
+        const shortUrl: IShortUrl | null = await ShortUrls.findById(id);
 
-        return res.json({ url: shortUrl });
+        const data = {
+            id: shortUrl!._id,
+            long: shortUrl!.long,
+            short: `${config.HOST}/${shortUrl!.slug}`
+        };
+
+        console.log(data);
+
+        return res.json({ url: data });
     } catch (error) {
         return res.json({ error: error.message });
     }
@@ -41,7 +66,10 @@ const CreateShortUrl = async (req: Request, res: Response) => {
     const { long }: ICreateReqBody = req.body;
 
     try {
-        const newShortUrl = await ShortUrls.create({ long, slug: nanoid(6) });
+        const newShortUrl = await ShortUrls.create({
+            long: `https://${long}`,
+            slug: nanoid(6)
+        });
 
         return res.json({ url: newShortUrl });
     } catch (error) {
@@ -91,6 +119,7 @@ const DeleteShortUrl = async (req: NExpress.IRequest, res: Response) => {
 
 // controllers exports
 export {
+    Home,
     FetchShortUrlsAll,
     FetchShortUrl,
     CreateShortUrl,

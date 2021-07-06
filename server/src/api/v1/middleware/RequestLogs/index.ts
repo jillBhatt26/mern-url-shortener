@@ -15,9 +15,9 @@ const RequestLogs = (req: Request, res: Response, next: NextFunction) => {
             NAMESPACE,
             `METHOD - [${req.method}], URL - [${req.url}], IP - [${req.socket.remoteAddress}], STATUS - [${res.statusCode}]`
         );
-
-        next();
     });
+
+    next();
 };
 
 export default RequestLogs;

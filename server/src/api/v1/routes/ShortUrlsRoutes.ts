@@ -3,6 +3,7 @@ import { Router } from 'express';
 
 // controllers
 import {
+    Home,
     FetchShortUrlsAll,
     FetchShortUrl,
     CreateShortUrl,
@@ -42,6 +43,8 @@ const router: Router = Router();
  */
 
 // routes definitions
+router.get('/home', Home);
+
 router.get('/', FetchShortUrlsAll);
 
 router.get('/:id', FetchShortUrl);
