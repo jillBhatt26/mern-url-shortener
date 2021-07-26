@@ -39,10 +39,13 @@ Promise.resolve(new Database().connection())
         if (isConnected === true) {
             const httpServer: http.Server = http.createServer(app);
 
-            const { PORT, HOST } = config;
+            const { PORT, HOST, ENV } = config;
 
             httpServer.listen(PORT, HOST, () => {
-                logger.info(NAMESPACE, `Server hosted on ${HOST}:${PORT}`);
+                logger.info(
+                    NAMESPACE,
+                    `Server hosted in ENV: "${ENV}", on ${HOST}:${PORT}`
+                );
             });
         }
     })

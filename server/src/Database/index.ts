@@ -8,7 +8,7 @@ class Database {
     connection = async (): Promise<boolean | Error> => {
         let isConnected: boolean = false;
 
-        const connection: Promise<boolean | Error> = await mongoose
+        const connection: boolean | Error = await mongoose
             .connect(this.DB_URI, {
                 useUnifiedTopology: true,
                 useCreateIndex: true,
@@ -22,7 +22,9 @@ class Database {
             .catch(err => {
                 console.log('Mongodb Connection Error: ', err.message);
 
-                return err;
+                const error: Error = new Error(err.message);
+
+                return error;
             });
 
         return connection;

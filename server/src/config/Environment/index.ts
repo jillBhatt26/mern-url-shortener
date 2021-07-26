@@ -11,7 +11,13 @@ let PORT: number = -1;
 let DB_URI: string = '';
 let ENV_ERROR: string = '';
 
-let config: IConfig = { PORT: -1, HOST: '', DB_URI: '', ENV_ERROR: '' };
+let config: IConfig = {
+    ENV: '',
+    PORT: -1,
+    HOST: '',
+    DB_URI: '',
+    ENV_ERROR: ''
+};
 
 switch (NODE_ENV) {
     case 'production':
@@ -39,6 +45,7 @@ switch (NODE_ENV) {
 
 if (PORT && HOST && DB_URI) {
     config = {
+        ENV: NODE_ENV,
         PORT,
         HOST,
         DB_URI,
@@ -46,6 +53,7 @@ if (PORT && HOST && DB_URI) {
     };
 } else if (ENV_ERROR) {
     config = {
+        ENV: '',
         PORT,
         HOST,
         DB_URI,

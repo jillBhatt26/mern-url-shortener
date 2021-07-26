@@ -1,4 +1,5 @@
 interface IConfig {
+    ENV: string;
     PORT: number;
     HOST: string;
     DB_URI: string;
