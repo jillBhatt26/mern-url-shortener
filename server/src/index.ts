@@ -57,10 +57,13 @@ Promise.resolve(new Database().connection())
     });
 
 // Routes middleware
-app.use('/shortUrls', shortUrlRoutes);
+app.use('/', shortUrlRoutes);
 
-// swagger middleware
-app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpecs));
+// NOTE: Confidential. Only allow to access following URL in development environment
+if (config.ENV === 'development') {
+    // swagger middleware
+    app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpecs));
+}
 
 // Error Handler middleware
 app.use(ErrorHandler);

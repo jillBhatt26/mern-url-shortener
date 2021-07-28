@@ -18,7 +18,7 @@ const options: ISwaggerOptions = {
             }
         ]
     },
-    apis: ['./src/api/v1/routes/*.ts']
+    apis: ['./src/api/v1/routes/swagger/*.ts']
 };
 
 const swaggerSpecs = swaggerJsDoc(options);

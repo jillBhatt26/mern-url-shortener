@@ -8,8 +8,7 @@ import IShortUrl from '../Interfaces/models/IShortUrl';
 const ShortUrlSchema = new Schema<IShortUrl>({
     long: {
         type: String,
-        required: true,
-        unique: true
+        required: true
     },
     slug: {
         type: String,
