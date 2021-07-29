@@ -67,3 +67,5 @@ if (config.ENV === 'development') {
 
 // Error Handler middleware
 app.use(ErrorHandler);
+
+export default app;
