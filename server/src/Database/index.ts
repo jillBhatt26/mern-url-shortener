@@ -29,6 +29,22 @@ class Database {
 
         return connection;
     };
+
+    conn = (): Promise<boolean> =>
+        new Promise(async (resolve, reject) => {
+            try {
+                await mongoose.connect(this.DB_URI, {
+                    useUnifiedTopology: true,
+                    useCreateIndex: true,
+                    useFindAndModify: false,
+                    useNewUrlParser: true
+                });
+
+                return resolve(true);
+            } catch (error) {
+                return reject(false);
+            }
+        });
 }
 
 export default Database;

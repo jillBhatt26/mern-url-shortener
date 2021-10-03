@@ -16,6 +16,7 @@ import ICreateReqBody from '../Interfaces/controllers/ICreateReqBody';
 import IUrlParams from '../Interfaces/controllers/IUrlParams';
 import IUpdateReqBody from '../Interfaces/controllers/IUpdateReqBody';
 import IShortUrl from '../Interfaces/models/IShortUrl';
+import IErrorMessage from '../Interfaces/controllers/IErrorMessage';
 
 // controllers definitions
 const Home = async (req: Request, res: Response) => {
@@ -38,7 +39,14 @@ const FetchShortUrlsAll = async (req: Request, res: Response) => {
 
         return res.json({ urls: data });
     } catch (error) {
-        return res.json({ error: error.message });
+        let errorMessage: IErrorMessage = { code: -1, message: '' };
+
+        if (error instanceof Error) {
+            errorMessage.code = 500;
+            errorMessage.message = error.message;
+        }
+
+        return res.json({ error: errorMessage });
     }
 };
 
@@ -58,7 +66,14 @@ const FetchShortUrl = async (req: NExpress.IRequest, res: Response) => {
 
         return res.json({ url: data });
     } catch (error) {
-        return res.json({ error: error.message });
+        let errorMessage: IErrorMessage = { code: -1, message: '' };
+
+        if (error instanceof Error) {
+            errorMessage.code = 500;
+            errorMessage.message = error.message;
+        }
+
+        return res.json({ error: errorMessage });
     }
 };
 
@@ -73,7 +88,14 @@ const CreateShortUrl = async (req: Request, res: Response) => {
 
         return res.json({ url: newShortUrl });
     } catch (error) {
-        return res.json({ error: error.message });
+        let errorMessage: IErrorMessage = { code: -1, message: '' };
+
+        if (error instanceof Error) {
+            errorMessage.code = 500;
+            errorMessage.message = error.message;
+        }
+
+        return res.json({ error: errorMessage });
     }
 };
 
@@ -101,7 +123,14 @@ const UpdateSlug = async (req: NExpress.IRequest, res: Response) => {
 
         return res.json({ url: newShortUrl });
     } catch (error) {
-        return res.json({ error: error.message });
+        let errorMessage: IErrorMessage = { code: -1, message: '' };
+
+        if (error instanceof Error) {
+            errorMessage.code = 500;
+            errorMessage.message = error.message;
+        }
+
+        return res.json({ error: errorMessage });
     }
 };
 
@@ -113,7 +142,14 @@ const DeleteShortUrl = async (req: NExpress.IRequest, res: Response) => {
 
         return res.json({ url: newShortUrl });
     } catch (error) {
-        return res.json({ error: error.message });
+        let errorMessage: IErrorMessage = { code: -1, message: '' };
+
+        if (error instanceof Error) {
+            errorMessage.code = 500;
+            errorMessage.message = error.message;
+        }
+
+        return res.json({ error: errorMessage });
     }
 };
 

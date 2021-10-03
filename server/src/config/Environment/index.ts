@@ -1,8 +1,9 @@
 // imports
 import dotenv from 'dotenv';
 import IConfig from './Interfaces/IConfig';
+import path from 'path';
 
-dotenv.config();
+dotenv.config({ path: path.resolve(__dirname, '../', '../', '../', '.env') });
 
 const NODE_ENV: string = process.env.NODE_ENV!;
 
@@ -29,9 +30,9 @@ switch (NODE_ENV) {
         break;
 
     case 'development':
-        HOST = process.env.DEVELOPMENT_HOST!;
-        PORT = parseInt(process.env.PRODUCTION_PORT!);
-        DB_URI = process.env.DEVELOPMENT_DB_URI!;
+        HOST = process.env.DEV_HOST!;
+        PORT = parseInt(process.env.PRO_PORT!);
+        DB_URI = process.env.DEV_DB_URI!;
         ENV_ERROR = '';
 
         break;

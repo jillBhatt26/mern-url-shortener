@@ -37,7 +37,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(SetHeaders);
 
 // Database connection
-Promise.resolve(new Database().connection())
+Promise.resolve(new Database().conn())
     .then(isConnected => {
         if (isConnected === true) {
             const httpServer: http.Server = http.createServer(app);
