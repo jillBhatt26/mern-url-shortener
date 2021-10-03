@@ -137,9 +137,9 @@ const DeleteShortUrl = async (req: NExpress.IRequest, res: Response) => {
     const { id }: IUrlParams = req.params;
 
     try {
-        const newShortUrl = await ShortUrls.findByIdAndDelete(id);
+        const deletedShortURL = await ShortUrls.findByIdAndDelete(id);
 
-        return res.json({ url: newShortUrl });
+        return res.json({ url: deletedShortURL });
     } catch (error) {
         let errorMessage: IErrorMessage = { code: -1, message: '' };
 
