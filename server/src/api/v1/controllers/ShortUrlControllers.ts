@@ -17,6 +17,7 @@ import IUrlParams from '../Interfaces/controllers/IUrlParams';
 import IUpdateReqBody from '../Interfaces/controllers/IUpdateReqBody';
 import IShortUrl from '../Interfaces/models/IShortUrl';
 import IErrorMessage from '../Interfaces/controllers/IErrorMessage';
+import GetRequestProtocol from '../utils/GetRequestProtocol';
 
 // controllers definitions
 const Home = async (req: Request, res: Response) => {
@@ -31,7 +32,7 @@ const FetchShortUrlsAll = async (req: Request, res: Response) => {
             const info = {
                 id: url._id,
                 long: url.long,
-                short: `${config.HOST}/${url.slug}`
+                short: `${GetRequestProtocol()}://${config.HOST}/${url.slug}`
             };
 
             return info;
@@ -59,10 +60,8 @@ const FetchShortUrl = async (req: NExpress.IRequest, res: Response) => {
         const data = {
             id: shortUrl!._id,
             long: shortUrl!.long,
-            short: `${config.HOST}/${shortUrl!.slug}`
+            short: `${GetRequestProtocol()}://${config.HOST}/${shortUrl!.slug}`
         };
-
-        console.log(data);
 
         return res.json({ url: data });
     } catch (error) {

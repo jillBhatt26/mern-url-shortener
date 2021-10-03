@@ -50,7 +50,7 @@
 
 /**
  * @swagger
- * /:
+ * /short-urls:
  *      get:
  *          summary: Queries the database and fetches every document of ShortUrls
  *          tags: [ShortURL]
@@ -69,7 +69,7 @@
 
 /**
  * @swagger
- * /{id}:
+ * /short-urls/{id}:
  *      get:
  *          summary: Fetches the document of ShortUrl with the id passed in request params
  *          tags: [ShortURL]

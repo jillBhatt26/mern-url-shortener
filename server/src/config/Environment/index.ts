@@ -22,9 +22,9 @@ let config: IConfig = {
 
 switch (NODE_ENV) {
     case 'production':
-        HOST = process.env.PRODUCTION_HOST!;
-        PORT = parseInt(process.env.PRODUCTION_PORT!);
-        DB_URI = process.env.PRODUCTION_DB_URI!;
+        HOST = process.env.PRO_HOST!;
+        PORT = parseInt(process.env.PRO_PORT!);
+        DB_URI = process.env.PRO_DB_URI!;
         ENV_ERROR = '';
 
         break;

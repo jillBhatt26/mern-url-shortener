@@ -17,11 +17,11 @@ const router: Router = Router();
 // routes definitions
 router.get('/home', Home);
 
-router.get('/', FetchShortUrlsAll);
-
-router.get('/:id', FetchShortUrl);
+router.get('/short-urls', FetchShortUrlsAll);
 
 router.post('/create', CreateShortUrl);
+
+router.get('/short-urls/:id', FetchShortUrl);
 
 router.put('/update/:id', UpdateSlug);
 
